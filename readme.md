@@ -12,6 +12,7 @@
 
 
 ## Front End
+- *PLOTLY DASH???* [link](https://towardsdatascience.com/how-to-build-a-web-based-app-in-50-lines-of-code-using-plotly-and-dash-3953f039b217)
 - Webapp? Github pages?
 - gui? 
 - https://towardsdatascience.com/5-python-gui-frameworks-to-create-desktop-web-and-even-mobile-apps-c25f1bcfb561
