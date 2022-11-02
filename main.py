@@ -1,7 +1,6 @@
 import yfinance as yf
-msft = yf.Ticker("MSFT")
-shell = yf.Ticker('XOM')
-data = yf.download("SPY", start="2018-01-01", end="2022-04-12")
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
 
 # msft.sustainability
 
