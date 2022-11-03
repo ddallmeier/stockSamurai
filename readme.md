@@ -9,6 +9,8 @@
 ## Resources
 - https://github.com/ranaroussi/yfinance/blob/main/README.md 
 - https://pypi.org/project/yfinance/
+- https://dash.gallery/dash-opioid-epidemic/
+- 
 
 
 ## Front End
@@ -20,7 +22,7 @@
 
 
 ### Contents of Dashboard
-- Graph of past 3 months (change timeframe?)
+- Graph of stock, editable (change timeframe?)
 - Graph of quarterly + yearly revenue 
-- Last 5 recommendations
+- Last 5 recommendations - pie chart? 
 - GREEN SCALE color bar heatmap style
