@@ -8,31 +8,36 @@ import pandas as pd
 # df = yf.download('AAPL', start='2019-01-01', end='2020-01-01')
 # print(df)
 
-
 st.write("""
 # Stock Analysis App
 Enter a **stock ticker** to see information about it!
 """)
 
-title = st.text_input('Stock Ticker', '')
-dayz = st.text_input('History (Dayz)', '')
-st.write('The current ticker title is', title)
+tick = st.text_input('Stock Ticker', '')
+st.write('The current ticker title is', tick)
 
-
-tickerSymbol = title
+tickerSymbol = tick
 tickerData = yf.Ticker(tickerSymbol)
-#get the historical prices for this ticker
 tickerDf = tickerData.history(period='1d', start='2010-5-31', end='2020-5-31')
 
+### Attempt at changing graph timeframe
+# dayz = st.slider('Days', min_value=1, max_value=1000, value=5, step=1)
+# # dayz = st.number_input('Insert a number')
+# # st.write('The current number is ', dayz)
+# stt = datetime.now()
+# end = datetime.today() - timedelta(days=dayz)
+# tickerDf = tickerData.history(period='1d', start=stt, end=end)
 
 st.write("""
 ## Closing Price
 """)
 st.line_chart(tickerDf.Close)
 st.write("""
-## Volume Price
+## Earnings
 """)
-st.line_chart(tickerDf.Volume)
+st.line_chart(tickerDf.Earnings)
+
+
 
 
 
