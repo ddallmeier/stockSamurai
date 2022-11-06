@@ -20,6 +20,12 @@
 - https://towardsdatascience.com/5-python-gui-frameworks-to-create-desktop-web-and-even-mobile-apps-c25f1bcfb561
 - Dashboard style?
 
+## Streamlit??
+- https://medium.com/@hamzarabi303/stock-forecasts-dashboard-with-streamlit-introduction-to-streamlit-865901b352c3
+- https://python.plainenglish.io/building-a-stock-market-app-with-python-streamlit-in-20-minutes-2765467870ee
+- https://www.geeksforgeeks.org/create-and-deploy-a-stock-price-web-application-using-python-and-streamlit/
+
+
 
 ### Contents of Dashboard
 - Graph of stock, editable (change timeframe?)
