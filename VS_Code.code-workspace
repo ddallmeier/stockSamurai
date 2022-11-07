@@ -5,6 +5,10 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"name": "PhD_Thesis",
+			"path": "../VS_Code/PhD_Thesis"
 		}
 	],
 	"settings": {}
