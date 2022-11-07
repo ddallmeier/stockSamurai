@@ -3,41 +3,108 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import streamlit as st
 import pandas as pd
-
-## Data selection 
-# df = yf.download('AAPL', start='2019-01-01', end='2020-01-01')
-# print(df)
-
-st.write("""
-# Stock Analysis App
-Enter a **stock ticker** to see information about it!
-""")
-
-tick = st.text_input('Stock Ticker', '')
-st.write('The current ticker title is', tick)
-
-tickerSymbol = tick
-tickerData = yf.Ticker(tickerSymbol)
-tickerDf = tickerData.history(period='1d', start='2010-5-31', end='2020-5-31')
-
-### Attempt at changing graph timeframe
-# dayz = st.slider('Days', min_value=1, max_value=1000, value=5, step=1)
-# # dayz = st.number_input('Insert a number')
-# # st.write('The current number is ', dayz)
-# stt = datetime.now()
-# end = datetime.today() - timedelta(days=dayz)
-# tickerDf = tickerData.history(period='1d', start=stt, end=end)
-
-st.write("""
-## Closing Price
-""")
-st.line_chart(tickerDf.Close)
-st.write("""
-## Earnings
-""")
-st.line_chart(tickerDf.Earnings)
+import numpy as np
+from ta.volatility import BollingerBands
+from ta.trend import MACD
+from ta.momentum import RSIIndicator
+import seaborn as sns
 
 
+###########
+# sidebar #
+###########
+option = st.sidebar.text_input('Stock Ticker', 'msft')
+import datetime
+today = datetime.date.today()
+before = today - datetime.timedelta(days=700)
+start_date = st.sidebar.date_input('Start date', before)
+end_date = st.sidebar.date_input('End date', today)
+if start_date < end_date:
+    st.sidebar.success('Start date: `%s`\n\nEnd date:`%s`' % (start_date, end_date))
+else:
+    st.sidebar.error('Error: End date must fall after start date.')
+
+##############
+# Stock data #
+##############
+
+# Download data
+df = yf.download(option,start= start_date,end= end_date, progress=False)
+
+# Bollinger Bands
+indicator_bb = BollingerBands(df['Close'])
+bb = df
+bb['bb_h'] = indicator_bb.bollinger_hband()
+bb['bb_l'] = indicator_bb.bollinger_lband()
+bb = bb[['Close','bb_h','bb_l']]
+
+# Moving Average Convergence Divergence
+macd = MACD(df['Close']).macd()
+
+# Revenue
+def get_earnings(ticker):
+    earn = yf.Ticker(ticker).earnings
+    return earn
+rev = get_earnings(option)
+
+###################
+# Set up main app #
+###################
+
+# Plot the prices and the bolinger bands
+st.write('Stock Bollinger Bands')
+st.line_chart(bb)
+
+progress_bar = st.progress(0)
+
+# Plot MACD
+st.write('Stock Moving Average Convergence Divergence (MACD)')
+st.area_chart(macd)
+
+# Plot Green index
+def sustainability(ticker):
+    env = yf.Ticker(ticker).sustainability
+    env = env.iloc[-3].Value
+    return env
+
+green = sustainability(option)
+st.write('Green Index of ',option, 'is: ', green)
+
+# Plot Revenue
+st.write('Revenue of ',df, 'is: ', rev)
+st.line_chart(rev)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Download Data Button
+# def to_excel(df):
+#     output = BytesIO()
+#     writer = pd.ExcelWriter(output, engine='xlsxwriter')
+#     df.to_excel(writer, sheet_name='Sheet1')
+#     writer.save()
+#     processed_data = output.getvalue()
+#     return processed_data
+
+# def get_table_download_link(df):
+#     """Generates a link allowing the data in a given panda dataframe to be downloaded
+#     in:  dataframe
+#     out: href string
+#     """
+#     val = to_excel(df)
+#     b64 = base64.b64encode(val)  # val looks like b'...'
+#     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="download.xlsx">Download excel file</a>' # decode b'abc' => abc
+
+# st.markdown(get_table_download_link(df), unsafe_allow_html=True)

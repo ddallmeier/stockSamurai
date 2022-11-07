@@ -17,6 +17,7 @@
 - https://www.geeksforgeeks.org/create-and-deploy-a-stock-price-web-application-using-python-and-streamlit/
 - https://www.youtube.com/watch?v=JwSS70SZdyM&ab_channel=freeCodeCamp.org
 - https://github.com/dataprofessor/streamlit_freecodecamp/blob/main/app_5_eda_sp500_stock/sp500-app.py
+- https://medium.com/xaipient/attribution-heatmaps-using-streamlit-and-xaipient-explanations-api-824100656e00
 
   
 ### Contents of Dashboard
