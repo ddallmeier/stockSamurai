@@ -1,14 +1,13 @@
 # Stock Samurai
 ## TODO 
-- Change title size/font/color
-- Add enviormental divergence from mean 
-- Add conditional formatting to dataframe
+- Loop through stock exchange items to get AVERAGE green/percentile, ect
+- Add conditional formatting to dataframe ([Styling](https://pandas.pydata.org/pandas-docs/version/0.25.1/user_guide/style.html))
 - Develop bollinger band + green/sentiment trading algo?
+- Add data download section
 
 ## Resources
 - https://github.com/ranaroussi/yfinance/blob/main/README.md 
 - https://pypi.org/project/yfinance/
-- https://dash.gallery/dash-opioid-epidemic/
 
 ## Front End (Streamlit)
 - Dashboard style
@@ -18,13 +17,6 @@
 - https://www.youtube.com/watch?v=JwSS70SZdyM&ab_channel=freeCodeCamp.org
 - https://github.com/dataprofessor/streamlit_freecodecamp/blob/main/app_5_eda_sp500_stock/sp500-app.py
 - https://medium.com/xaipient/attribution-heatmaps-using-streamlit-and-xaipient-explanations-api-824100656e00
-
-  
-### Contents of Dashboard
-- Graph of stock, editable (change timeframe?)
-- Graph of quarterly + yearly revenue 
-- Last 5 recommendations - pie chart? 
-- GREEN SCALE color bar heatmap style
 
 # Outline
 ![Outline](./data/outline.png)

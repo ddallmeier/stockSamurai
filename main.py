@@ -12,6 +12,7 @@ import seaborn as sns
 ###########
 # sidebar #
 ###########
+st.sidebar.markdown('# Enter a Stock Ticker')
 option = st.sidebar.text_input('Stock Ticker', 'msft')
 import datetime
 today = datetime.date.today()
@@ -19,9 +20,9 @@ before = today - datetime.timedelta(days=700)
 start_date = st.sidebar.date_input('Start date', before)
 end_date = st.sidebar.date_input('End date', today)
 if start_date < end_date:
-    st.sidebar.success('Start date: `%s`\n\nEnd date:`%s`' % (start_date, end_date))
+    st.sidebar.success('Start date: `%s`\n\nEnd date: `%s`' % (start_date, end_date))
 else:
-    st.sidebar.error('Error: End date must fall after start date.')
+    st.sidebar.error('Error: End date must be after the start date, try again.')
 
 ##############
 # Stock data #
@@ -29,6 +30,8 @@ else:
 
 # Download data
 df = yf.download(option,start= start_date,end= end_date, progress=False)
+
+st.title('Stock Samurai')
 
 # Plot green factors
 ## TODO Add divergence from mean/median
@@ -49,15 +52,32 @@ def percentilez(ticker):
     return env
 
 green = sustainability(option)
-total_ = total_esg(option)
+total_ = total_esg(option) 
 percentile_ = percentilez(option)
 
-# st.metric(label="Environment Score", value=green, delta=0.0)
+percent_delta = round(50 - percentile_)
+total_delta = round(25 - total_)
+green_delta = round(15 - green)
+
+percentile__ = str(percentile_) + '%'
+percent_delta = str(percent_delta) + '%'
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Environment Score", green, 0.0)
-col2.metric("Total ESG",total_ , 0.0)
-col3.metric("Percentile",percentile_ , 0.0)
+col1.metric("Environment Score", green, green_delta)
+col2.metric("Total ESG",total_ , total_delta)
+col3.metric("Percentile",percentile__, percent_delta)
+
+
+# PRINT GREEN OR NOT 
+def get_green(ticker):
+    if green < 15.0 and total_ < 25.0 and percentile_ < 50.0:
+        new_title = '<p style="font-family:sans-serif; color:Green; font-size: 22px;">This company is green! 😄</p>'
+        st.markdown(new_title, unsafe_allow_html=True)
+    else:
+        new_title = '<p style="font-family:sans-serif; color:Red; font-size: 22px;">This company is not green 😦</p>'
+        st.markdown(new_title, unsafe_allow_html=True)
+
+get_green(option)
 
 
 # Bollinger Bands
@@ -79,11 +99,11 @@ rev = get_earnings(option)
 ###################
 
 # Plot the prices and the bolinger bands
-st.write('Stock Bollinger Bands')
+st.markdown('### Stock Bollinger Bands')
 st.line_chart(bb)
 
 # Plot Revenue
-st.write('Revenue of ',option, 'is: ')
+st.markdown('### Revenue')
 st.line_chart(rev)
 
 
@@ -94,7 +114,7 @@ def get_recommendations(ticker):
     return rec
 rec = get_recommendations(option)
 
-st.markdown('<p style="font-family:sans-serif; color:Green; font-size: 42px;">Reccomendations</p>', unsafe_allow_html=True)
+st.markdown('### Recommendations')
 st.dataframe(rec, use_container_width=True)
 
 
