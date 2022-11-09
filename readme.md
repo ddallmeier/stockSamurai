@@ -13,4 +13,4 @@
 - Dashboard style
 
 # Outline
-![Outline](./data/outline.png)
+![Outline](./src/data/outline.png)
