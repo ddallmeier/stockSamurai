@@ -1,8 +1,8 @@
 # Stock Samurai
 ## TODO 
-- Develop project outline
-- Develop green index
-- Develop twitter stock sentiment index
+- Change title size/font/color
+- Add enviormental divergence from mean 
+- Add conditional formatting to dataframe
 - Develop bollinger band + green/sentiment trading algo?
 
 ## Resources

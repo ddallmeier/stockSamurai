@@ -9,7 +9,6 @@ from ta.trend import MACD
 from ta.momentum import RSIIndicator
 import seaborn as sns
 
-
 ###########
 # sidebar #
 ###########
@@ -31,6 +30,36 @@ else:
 # Download data
 df = yf.download(option,start= start_date,end= end_date, progress=False)
 
+# Plot green factors
+## TODO Add divergence from mean/median
+
+def sustainability(ticker):
+    env = yf.Ticker(ticker).sustainability
+    env = env.iloc[-3].Value
+    return env
+
+def total_esg(ticker):
+    env = yf.Ticker(ticker).sustainability
+    env = env.iloc[-12].Value
+    return env
+
+def percentilez(ticker):
+    env = yf.Ticker(ticker).sustainability
+    env = env.iloc[-6].Value
+    return env
+
+green = sustainability(option)
+total_ = total_esg(option)
+percentile_ = percentilez(option)
+
+# st.metric(label="Environment Score", value=green, delta=0.0)
+
+col1, col2, col3 = st.columns(3)
+col1.metric("Environment Score", green, 0.0)
+col2.metric("Total ESG",total_ , 0.0)
+col3.metric("Percentile",percentile_ , 0.0)
+
+
 # Bollinger Bands
 indicator_bb = BollingerBands(df['Close'])
 bb = df
@@ -38,8 +67,6 @@ bb['bb_h'] = indicator_bb.bollinger_hband()
 bb['bb_l'] = indicator_bb.bollinger_lband()
 bb = bb[['Close','bb_h','bb_l']]
 
-# Moving Average Convergence Divergence
-macd = MACD(df['Close']).macd()
 
 # Revenue
 def get_earnings(ticker):
@@ -55,24 +82,22 @@ rev = get_earnings(option)
 st.write('Stock Bollinger Bands')
 st.line_chart(bb)
 
-progress_bar = st.progress(0)
-
-# Plot MACD
-st.write('Stock Moving Average Convergence Divergence (MACD)')
-st.area_chart(macd)
-
-# Plot Green index
-def sustainability(ticker):
-    env = yf.Ticker(ticker).sustainability
-    env = env.iloc[-3].Value
-    return env
-
-green = sustainability(option)
-st.write('Green Index of ',option, 'is: ', green)
-
 # Plot Revenue
-st.write('Revenue of ',df, 'is: ', rev)
+st.write('Revenue of ',option, 'is: ')
 st.line_chart(rev)
+
+
+# Display Reccomendations
+## TODO CONDIITONAL formatting
+def get_recommendations(ticker):
+    rec = yf.Ticker(ticker).recommendations
+    return rec
+rec = get_recommendations(option)
+
+st.markdown('<p style="font-family:sans-serif; color:Green; font-size: 42px;">Reccomendations</p>', unsafe_allow_html=True)
+st.dataframe(rec, use_container_width=True)
+
+
 
 
 
