@@ -5,8 +5,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from ta.volatility import BollingerBands
-from ta.trend import MACD
-from ta.momentum import RSIIndicator
 import seaborn as sns
 
 ###########

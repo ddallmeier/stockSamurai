@@ -1,0 +1,8 @@
+yfinance
+matplotlib
+datetime
+streamlit
+pandas
+numpy
+ta BollingerBands
+seaborn
