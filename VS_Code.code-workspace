@@ -9,6 +9,9 @@
 		{
 			"name": "PhD_Thesis",
 			"path": "../VS_Code/PhD_Thesis"
+		},
+		{
+			"path": "../ImageJ_ML"
 		}
 	],
 	"settings": {}
