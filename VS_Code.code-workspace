@@ -12,6 +12,9 @@
 		},
 		{
 			"path": "../ImageJ_ML"
+		},
+		{
+			"path": "../AdventOfCode"
 		}
 	],
 	"settings": {}
